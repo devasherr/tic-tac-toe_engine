@@ -41,13 +41,13 @@ func main() {
 
 	for {
 		printBoard(board)
-		row, col := 0, 0
+		var row, col int
 
-		if players[currentPlayer] == "X" {
-			// computers turn
-			fmt.Println("thinking...")
+		switch players[currentPlayer] {
+		case "X":
+			fmt.Println("computer is thinking ...")
 			row, col = gamelogic.GetComputerMove(board)
-		} else {
+		default:
 			row, col = gamelogic.GetPlayerMove(players[currentPlayer])
 		}
 
