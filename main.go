@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand/v2"
 
 	gamelogic "github.com/devasherr/tic-tac-toe/gamelogic"
 	gamestate "github.com/devasherr/tic-tac-toe/gamestate"
@@ -37,7 +38,14 @@ func main() {
 		{" ", " ", " "},
 	}
 	players := [2]string{"X", "O"}
-	currentPlayer := 0
+	currentPlayer := rand.IntN(2)
+	if currentPlayer == 0 {
+		msg := fmt.Sprintln("Computer will start the game")
+		color.Green(msg)
+	} else {
+		msg := fmt.Sprintln("Player will start the game")
+		color.Green(msg)
+	}
 
 	for {
 		printBoard(board)
@@ -45,7 +53,7 @@ func main() {
 
 		switch players[currentPlayer] {
 		case "X":
-			fmt.Println("computer is thinking ...")
+			fmt.Println("computer's turn")
 			row, col = gamelogic.GetComputerMove(board)
 		default:
 			row, col = gamelogic.GetPlayerMove(players[currentPlayer])

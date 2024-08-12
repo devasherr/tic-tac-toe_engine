@@ -39,7 +39,7 @@ func GetComputerMove(board [3][3]string) (int, int) {
 		for j := 0; j < len(board); j++ {
 			if board[i][j] == " " {
 				board[i][j] = "X"
-				score := minimax(board, 0, false)
+				score := minimax(board, false)
 				board[i][j] = " "
 				if score > best_score {
 					best_score = score
@@ -52,42 +52,42 @@ func GetComputerMove(board [3][3]string) (int, int) {
 	return row, col
 }
 
-func minimax(board [3][3]string, depth float64, is_maximizing bool) float64 {
+func minimax(board [3][3]string, isMaximizing bool) float64 {
 	if gamestate.CheckWinner(board, "X") {
-		return 10 - depth
+		return 10
 	}
 	if gamestate.CheckWinner(board, "O") {
-		return depth - 10
+		return -10
 	}
 	if gamestate.CheckDraw(board) {
 		return 0
 	}
 
-	if is_maximizing {
-		best_score := math.Inf(-1)
+	if isMaximizing {
+		bestScore := -math.Inf(1)
 		for i := 0; i < len(board); i++ {
 			for j := 0; j < len(board); j++ {
 				if board[i][j] == " " {
 					board[i][j] = "X"
-					score := minimax(board, depth+1, false)
+					score := minimax(board, false)
 					board[i][j] = " "
-					best_score = max(best_score, score)
+					bestScore = math.Max(bestScore, score)
 				}
 			}
 		}
-		return best_score
+		return bestScore
 	} else {
-		best_score := math.Inf(-1)
+		bestScore := math.Inf(1)
 		for i := 0; i < len(board); i++ {
 			for j := 0; j < len(board); j++ {
 				if board[i][j] == " " {
-					board[i][j] = "X"
-					score := minimax(board, depth+1, false)
-					board[i][j] = "	 "
-					best_score = max(best_score, score)
+					board[i][j] = "O"
+					score := minimax(board, true)
+					board[i][j] = " "
+					bestScore = math.Min(bestScore, score)
 				}
 			}
 		}
-		return best_score
+		return bestScore
 	}
 }
